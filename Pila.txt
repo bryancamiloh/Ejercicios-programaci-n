@@ -1,0 +1,194 @@
+import java.util.Scanner;
+public class Pila {
+	
+	class Nodo{
+		int info;
+		Nodo Sig;
+	}
+	
+	private Nodo Raiz;
+	
+	public Pila(){
+		Raiz = null;
+	}
+	
+	public void Insertar(int x){
+		Nodo Nuevo = new Nodo();
+		Nuevo.info = x;
+		if(Raiz == null){
+			Nuevo.Sig =  null;
+			Raiz = Nuevo;
+		}else{
+			Nuevo.Sig = Raiz;
+			Raiz = Nuevo;
+		}	
+	}
+	
+	public int Extraer(){
+		if(Raiz != null){
+			int Informacion = Raiz.info;
+			Raiz = Raiz.Sig;
+			return Informacion;
+		}else{
+			return Integer.MAX_VALUE;
+		}
+	}
+	
+	public int Primero(){
+		if(!esVacia()){
+			return Raiz.info;
+		}else{
+			return -1;
+		}
+	}
+	
+	public void Mostrar(){
+		System.out.println("Estos son los elementos de la pila:\n");
+		Nodo Reco = Raiz;
+		while(Reco != null){
+			System.out.print(Reco.info+"-");
+			Reco = Reco.Sig;
+		}
+		System.out.println("");
+	}
+	
+	public int SumarElementos(int x,Nodo Aux){
+		if(Aux == null){
+			return x;
+		}else{
+			x += Aux.info;
+			return SumarElementos(x,Aux.Sig);
+		}
+	}
+	
+	public int SumarElementos2(){
+		int x = 0;
+		Nodo Aux = Raiz;
+		while(Aux != null){
+			x += Aux.info;
+			Aux = Aux.Sig;
+		}
+		return x;
+	}
+	
+	public int CantidadElementos(){
+		Nodo T = Raiz;
+		int i = 0;
+		while(T != null){
+			T = T.Sig;
+			i++;
+		}
+		return i;
+	}
+	
+	public void InvertirPilaIt(Pila Temp){
+		Nodo Aux = Raiz;
+		String Cadena = "";
+		while(Aux != null){
+			System.out.print(Aux.info+"-");
+			Temp.Insertar(Aux.info);
+			Aux = Aux.Sig;
+		}
+		System.out.println("\nPila invertida: ");
+		while(!Temp.esVacia()){
+			Cadena += Temp.Extraer()+"-";
+		}
+		System.out.println(Cadena);
+	}
+	
+	public void InvertirPilaRe(Pila P,Pila T,Nodo Nd){
+		if(Nd == null){
+			return;
+		}else{
+			T.Insertar(Nd.info);
+			Nd = Nd.Sig;
+			InvertirPilaRe(P,T,Nd);
+		}
+		ImprimirPilaInv(T,Nd);
+	}
+	
+	public void ImprimirPilaInv(Pila Res,Nodo N){
+		N = Res.Raiz;
+		String Cadena = "";
+		if(N == null){
+			System.out.println(Cadena);;
+		}else{
+			Cadena += N.info+"-";
+			N = N.Sig;
+			ImprimirPilaInv(Res,N);
+		}
+	}
+	
+	public void ImprimirUltimo(){
+		Nodo Fin = Raiz;
+		while(Fin.Sig != null){
+			Fin = Fin.Sig;
+		}
+		System.out.println(Fin.info);
+	}
+	
+	public void BorrarPila(){
+		while(!esVacia()){
+			Raiz = Raiz.Sig;
+		}
+	}
+	
+	public boolean esVacia(){
+		if(Raiz == null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public static void main(String[] args) {
+		Pila P = new Pila();
+		Scanner Digito = new Scanner(System.in);
+		int Opt = 0,Cant;
+		while(Opt != 10){
+			System.out.println("Por favor elija una de estas opciones:");
+			System.out.println("1.Insertar valores\n2.Eliminar valor\n3.Mostrar Valores\n4.Sumar elementos recursivamente\n5. Sumar elementos iterativamente\n6. Imprimir pila invertida(iteración)\n7. Invertir pila recursivamente\n8.Borrar Lista\n9.Imprimir último valor de la pila\n10.Salir del programa");
+			Opt = Digito.nextInt();
+			switch(Opt){
+			case 1:
+				System.out.print("Digite la cantidad de enteros que desea ingresar: ");
+				Cant = Digito.nextInt();
+				for(int i=0;i<Cant;i++){
+					int Numero = (int) Math.floor(Math.random()*100);
+					P.Insertar(Numero);
+				}
+				break;
+			case 2:
+				System.out.println("Se ha borrado el numero "+P.Extraer());
+				break;
+			case 3:
+				P.Mostrar();
+				break;
+			case 4:
+				Nodo Aux = P.Raiz;
+				System.out.println("La suma de los enteros es: "+P.SumarElementos(0,Aux));
+				break;
+			case 5:
+				System.out.println("La suma de los enteros es: "+P.SumarElementos2());
+				break;
+			case 6:
+				Pila Paux = new Pila();
+				P.InvertirPilaIt(Paux);
+				break;
+			case 7:
+				Pila Temp = new Pila();
+				Nodo N = P.Raiz;
+				P.InvertirPilaRe(P,Temp,N);
+				break;
+			case 8:
+				P.BorrarPila();
+				break;
+			case 9:
+				P.ImprimirUltimo();
+			case 10:
+				System.exit(0);
+				break;
+			}
+		}
+	}
+
+}
