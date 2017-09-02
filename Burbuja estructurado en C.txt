@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <time.h>
+
+int main(int argc, char *argv[]) {
+	int Cant = 0, Inf = 0, Sup = 0, Aux = 0,i,j,k,l;
+	srand(time(NULL));
+	printf("\t\tMetodo de ordenamiento por bubuja\n\nPor favor digite la cantidad de numeros que desea ordenar de forma descendente: ");
+	scanf("%d",&Cant);
+	if(Cant != 0){
+		if(Cant > 0){
+			int Numeros[Cant];
+			printf("\nDigite un limite inferior y superior para los numeros que se desean generar de manera aleatoria\nInferior: ");
+			scanf("%d",&Inf);
+			if(Inf >= INT_MIN){
+				printf("Superior:");
+				scanf("%d",&Sup);
+				if(Sup <= INT_MAX){
+					if(Sup >= Inf){
+						printf("\nNumeros a ordenar:\n");
+						for(i=0;i<Cant;i++){
+							Numeros[i] = Inf+rand()%(Sup+1-Inf);
+							printf("\n%d",Numeros[i]);
+						}
+						for(j=0;j<Cant;j++){
+							for(k=0;k<Cant-j;k++){
+								if(k+1 != Cant){
+									if(Numeros[k] < Numeros[k+1]){
+										Aux = Numeros[k];
+										Numeros[k] = Numeros[k+1];
+										Numeros[k+1] = Aux;
+									}
+								}
+							}
+						}
+						printf("\n\nVector ordenado:\n");
+						for(l=0;l<Cant;l++){
+							printf("\n%d",Numeros[l]);
+						}	
+					}else{
+						printf("El limite inferior debe ser menor o igual al limite superior");
+					}	
+				}else{
+					printf("Limite superior fuera de rango.");
+				}
+			}else{
+				printf("Limite inferior fuera de rango.");
+			}	
+		}else{
+			printf("\n\nSolo se permiten valores positivos para definir la cantidad.");
+		}
+	}
+	system("pause");
+	return 0;
+}
