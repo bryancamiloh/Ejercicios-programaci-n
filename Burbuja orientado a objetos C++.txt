@@ -1,0 +1,87 @@
+#include <iostream>
+#include <cstdlib>
+#include <limits>
+#include <time.h>
+
+using namespace::std;
+
+class Burbuja{
+	
+	public: 
+		Burbuja();
+		void OrdenarAleatorios(int,int[]);
+		bool Validar(int);
+};
+
+Burbuja::Burbuja(){
+	
+	int Cantidad = 0,Inferior = 0,Superior = 0;
+	srand(time(NULL));
+	cout<<"\t\tOrdenamiento por el metodo de burbuja\n\nPor favor digite la cantidad de numeros que desea generar de forma aleatoria para ordenar: ";
+	cin>>Cantidad;
+	if(Cantidad >= 0){
+		if(Validar(Cantidad) == true){
+			int Numeros[Cantidad];
+			cout<<"\nGenerar numeros aleatorios desde: ";
+			cin>>Inferior;
+			if(Validar(Inferior) == true){
+				cout<<"Hasta: ";
+				cin>>Superior;
+				if(Validar(Superior) == true){
+					if(Superior >= Inferior){
+						cout<<"Numeros aleatorios generados:\n"<<endl;
+						for(int i=0;i<Cantidad;i++){
+							Numeros[i] = Inferior+rand()%(Superior+1-Inferior);
+							cout<<Numeros[i]<<endl;
+						}
+						OrdenarAleatorios(Cantidad,Numeros);	
+					}else{
+						cout<<"El limite inferior debe ser menor o igual al limite superior."<<endl;
+					}	
+				}else{
+					cout<<"Limite superior fuera de rango."<<endl;
+				}
+			}else{
+				cout<<"Limite inferior fuera de rango."<<endl;
+			}	
+		}else{
+			cout<<"Cantidad no valida."<<endl;
+		}
+	}else{
+		cout<<"\nSolo se permiten valores positivos para definir la cantidad."<<endl;
+	}
+}
+
+void Burbuja::OrdenarAleatorios(int Cant,int Num[]){
+	int j,k,l,Aux=0;
+	for (j=0;j<Cant;j++){
+		for(k=0;k<Cant-j;k++){
+			if(k+1 != Cant){
+				if(Num[k] < Num[k+1]){
+					Aux = Num[k];
+					Num[k] = Num[k+1];
+					Num[k+1] = Aux;
+				}	
+			}
+		}
+	}
+	cout<<"Numeros aleatorios ordenados:\n"<<endl;
+	for(l=0;l<Cant;l++){
+		cout<<Num[l]<<endl;
+	}
+}
+
+bool Burbuja::Validar(int Val){
+	if(Val > INT_MIN && Val < INT_MAX){
+		return true;
+	}else{
+		cout<<"Los limites deben ser mayores a "<<INT_MIN<<" y menores a "<<INT_MAX<<endl;
+		return false;
+	}
+} 
+
+int main(int argc, char** argv) {
+	Burbuja B;
+	system("PAUSE");
+	return 0;
+}
