@@ -12,7 +12,7 @@ MakeIncludes=
 Compiler=
 CppCompiler=
 Linker=
-IsCpp=0
+IsCpp=1
 Icon=
 ExeOutput=
 ObjectOutput=
@@ -51,8 +51,8 @@ AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit1]
-FileName=Ordenamiento burbuja.c
-CompileCpp=0
+FileName=Ordenamiento burbuja.cpp
+CompileCpp=1
 Folder=
 Compile=1
 Link=1
