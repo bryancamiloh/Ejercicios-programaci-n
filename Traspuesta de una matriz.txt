@@ -1,0 +1,80 @@
+import java.util.Scanner;
+import java.math.*;
+public class Traspuesta {
+	
+	public static int[][] TrasponerMatriz(int[][] M,int[][] T,int k,int l,int i,int j,int F,int C){
+		int m = 0, n = 0;
+		if(F == 1){
+			while(l < C){
+				T[k][l] = M[l][k];
+				l++;
+			}
+		}else{
+			int[][] Matriz1 = new int[F/2][C];
+			int[][] Matriz2 = new int[F/2][C];
+			while(i < F){
+				if(i < F/2){
+					Matriz1[i][j] = M[i][j];
+				}
+				if(i >= F/2){
+					Matriz2[m][n] = M[i][j];
+					if(n < C-1){
+						n++;
+					}else{
+						m++;
+						n=0;
+					}
+				}
+				if(j < C-1){
+					j++;
+				}else{
+					i++;
+					j=0;
+				}
+			}
+			if(Matriz1.length > 1){
+				return TrasponerMatriz(M,T,k,l,0,0,Matriz1.length,Matriz1[0].length);
+			}
+			if(Matriz2.length > 1){
+				return TrasponerMatriz(M,T,k,l,0,0,Matriz2.length,Matriz2[0].length);
+			}
+			
+		}
+		return T;
+	}
+	
+
+	public static void main(String[] args) {
+		int Grado = 0,Matriz[][],MatrizT[][],Filas = 0, Columnas = 0,i = 0,j = 0,k=0,l=0;
+		Scanner Teclado = new Scanner(System.in);
+		System.out.print("Digite el grado de la matriz a trasponer: ");
+		Grado = Teclado.nextInt();
+		Filas = (int)Math.pow(2,Grado);
+		Columnas = (int)Math.pow(2,Grado);
+		Matriz = new int[Filas][Columnas];
+		MatrizT = new int[Filas][Columnas];
+		System.out.println("Matriz a trasponer:\n");
+		while(i < Filas){
+			Matriz[i][j] = i;
+			System.out.print(Matriz[i][j]+" ");
+			if(j < Filas-1){
+				j++;
+			}else{
+				i++;
+				j=0;
+				System.out.println(" ");
+			}
+		}
+		MatrizT = TrasponerMatriz(Matriz,MatrizT,0,0,0,0,Filas,Columnas);
+		System.out.println("Matriz traspuesta:");
+		while(k < MatrizT.length){
+			System.out.print(MatrizT[k][l]+" ");
+			if(l < MatrizT.length-1){
+				l++;
+			}else{
+				k++;
+				l=0;
+				System.out.println(" ");
+			}
+		}
+	}
